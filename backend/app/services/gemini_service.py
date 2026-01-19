@@ -1,17 +1,11 @@
-# app/services/gemini_service.py
 import os
 from dotenv import load_dotenv
-from google import genai  # new package
+import google.generativeai as genai  # correct import
 
-load_dotenv()  # loads .env
+load_dotenv()  # load .env
 
-# Get API key
-API_KEY = os.getenv("GEMINI_API_KEY")
-if not API_KEY:
-    raise ValueError("GEMINI_API_KEY is missing! Make sure it is set in .env or Render environment settings.")
-
-# Create a client
-client = genai.Client(api_key=API_KEY)
+# Configure API key from environment variable
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 def analyze_log_with_ai(log_data: str) -> str:
     prompt = f"""
@@ -27,8 +21,8 @@ Analyze the following application log and respond STRICTLY in JSON with keys:
 LOG DATA:
 {log_data}
     """
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",  # supported model
-        contents=prompt
+    response = genai.chat.create(
+        model="models/text-bison-001",
+        messages=[{"author": "user", "content": prompt}]
     )
-    return response.text
+    return response.last
