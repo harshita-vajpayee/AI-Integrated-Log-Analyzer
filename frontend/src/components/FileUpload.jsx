@@ -29,10 +29,11 @@ const FileUpload = () => {
       formData.append("logFile", file);
 
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/logs/analyze",
+        "https://ai-integrated-log-analyzer.onrender.com/api/logs/analyze",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
+
 
       console.log("RAW RESPONSE:", res.data);
 
