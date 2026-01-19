@@ -6,8 +6,10 @@ from google import genai  # new package
 load_dotenv()  # loads .env
 
 # Get API key
-API_KEY = "AIzaSyADbRFBBQzO1aLzQTxqQscSbcc2TsWpDlw"
-#os.getenv("GEMINI_API_KEY")
+API_KEY = os.getenv("GEMINI_API_KEY")
+if not API_KEY:
+    raise ValueError("GEMINI_API_KEY is missing! Make sure it is set in .env or Render environment settings.")
+
 # Create a client
 client = genai.Client(api_key=API_KEY)
 
