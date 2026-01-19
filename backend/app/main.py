@@ -21,7 +21,7 @@ app.add_middleware(
 )
 
 # Register log routes under /api/logs
-app.include_router(log_router, prefix="")
+app.include_router(log_router, prefix="/api/logs")
 
 # Root route
 @app.get("/")
